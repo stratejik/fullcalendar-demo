@@ -7,7 +7,6 @@
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
 </head>
 <body>
-  <h1>FullCalendar Demo</h1>
   <div id="calendar"></div>
 
   <script>
@@ -16,10 +15,17 @@
       
       var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        events: [] // Events can be added later
+        events: [] // This will be dynamically populated via postMessage
       });
 
       calendar.render();
+      
+      // Listen for availability data from Wix
+      window.addEventListener("message", function(event) {
+        if (event.data && event.data.type === "availability") {
+          calendar.addEventSource(event.data.events); // Add events from Wix to the calendar
+        }
+      });
     });
   </script>
 </body>
