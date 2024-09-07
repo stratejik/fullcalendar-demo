@@ -12,14 +12,16 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       var calendarEl = document.getElementById('calendar');
-      
+
       var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        events: [] // This will be dynamically populated via postMessage
+        initialView: 'timeGridDay', // Can also use 'timeGridWeek' for a weekly view
+        slotMinTime: '07:00:00', // Show time starting at 7 AM
+        slotMaxTime: '18:00:00', // End the visible time at 6 PM
+        events: [] // Events will be populated dynamically via postMessage
       });
 
       calendar.render();
-      
+
       // Listen for availability data from Wix
       window.addEventListener("message", function(event) {
         if (event.data && event.data.type === "availability") {
